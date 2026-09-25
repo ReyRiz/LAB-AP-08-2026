@@ -1,0 +1,25 @@
+tujuan = input("masukkan tujuan (Pantai/Pegunungan/Kota): ")
+waktu = input("masukkan waktu (Pagi/Malam): ")
+tipe = input("masukkan tipe pengunjung (Anak/Dewasa): ")
+
+paket = None
+
+match tujuan:
+    case "Pantai":
+        if waktu == "Pagi":
+            paket = "Paket A"
+        elif waktu == "Malam" and tipe == "Dewasa":
+            paket = "Paket C"   
+    case "Pegunungan":
+        if waktu == "Pagi" and tipe == "Dewasa":
+            paket = "Paket B"
+        elif waktu == "Malam" and tipe == "Dewasa":
+            paket = "Paket C"
+    case "Kota":
+        if waktu == "Malam":
+            paket = "Paket C"
+
+if paket:
+    print(f"paket rekomendasi: {paket}")
+else:
+    print("tidak ada paket yang cocok")
