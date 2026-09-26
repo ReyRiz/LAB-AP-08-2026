@@ -1,4 +1,3 @@
-#opsi 2 ga ada tulisan kursi kosong
 print("--- Setup Denah Bioskop NontonYok ---")
 
 
@@ -14,19 +13,16 @@ while True:
         print("Input baris harus berupa angka!")
         print()
 
-         
-
 while True:
     try:
         jumlah_kursi = int(input("Masukkan jumlah kursi per baris: "))
-    except:
-            print("Input kursi harus berupa angka!")
-    else:
         if jumlah_kursi < 0:
             print("Jumlah kursi harus lebih dari 0!")
             continue
         break
-
+    except:
+            print("Input kursi harus berupa angka!")
+        
 print()
 print ("--- Daftar Kursi Tersedia ---")
 
