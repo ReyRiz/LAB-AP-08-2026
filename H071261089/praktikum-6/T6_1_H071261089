@@ -1,0 +1,41 @@
+# belanja = ["beras", "gula", "telur"]
+# belanja.append("minyak")
+# print(f"item pertama: {belanja[0]}")
+# print(f"item terakhir: {belanja[-1]}")
+
+# nilai = [70, 85, 900, 60, 75, 95, 80]
+# print(nilai[:3])
+# print(nilai[: :-1])
+
+# antrian = ["andi", "budi"] 
+# antrian.append("citra")
+# antrian.insert(0, "dedi")
+# antrian.extend(["eka", "fani"])
+# print(antrian)
+# stok = ["pulpen", "buku", "penggaris", "pensil"]
+# stok.remove ("buku")
+# stok.pop()
+# stok.reverse()
+# print(stok)
+
+# tiket = ["avengers", "19:00", "F12"]
+# film, jam, kursi = tiket
+# print(f"Film: {film}")
+# print(f"jam: {jam}")
+# print(f"Kursi: {kursi}")
+
+# futsal = {"ani", "budi", "citra", "dedi"}
+# basket = {"citra", "dedi", "eka"}
+# print(f"gabungan: {futsal | basket}")
+# print(f"irisan: {futsal & basket}")
+# print(f"hanya futsal: {futsal - basket}")
+# print(f"hanya salah satu: {basket ^ futsal}")
+
+kontak = {"nama":"eko","nomor":"0812","email":"eko@mail.com"}
+x = kontak.pop("email")
+y = kontak.popitem ()
+kontak.clear()
+
+print(f"email lama: {x} ")
+print(f"item terakhir dihapus: {y} ")
+print(f"kontak akhir: {kontak}")

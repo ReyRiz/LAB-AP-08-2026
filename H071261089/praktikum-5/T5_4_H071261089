@@ -1,0 +1,79 @@
+def deteksi_anomali_email(email):
+    masalah = []
+
+    if email.count("@") != 1:
+        return ["Harus memiliki tepat satu karakter @."]
+
+    pos = email.find("@")
+    local = email[:pos]
+    domain = email[pos + 1:]
+
+    if local == "" or domain == "":
+        masalah = masalah + ["Bagian sebelum @ (local) atau setelah @ (domain) tidak boleh kosong."]
+
+    if email.find(" ") != -1:
+        masalah = masalah + ["Tidak boleh mengandung spasi."]
+
+    if local.startswith(".") or local.endswith(".") or local.find("..") != -1:
+        masalah = masalah + ["Bagian local tidak boleh diawali/diakhiri titik atau mengandung titik berurutan."]
+
+    if domain.find(".") == -1:
+        masalah = masalah + ["Bagian domain wajib memiliki minimal satu titik."]
+
+    if domain.find("..") != -1 or domain.endswith("."):
+        masalah = masalah + ["Bagian domain tidak boleh mengandung titik berurutan atau diakhiri titik."]
+
+    if not (email.endswith(".com") or email.endswith(".id") or email.endswith(".ac.id")):
+        masalah = masalah + ["Wajib berakhiran dengan .com, .id, atau .ac.id"]
+
+    return masalah
+
+
+def cetak_daftar(daftar_email_valid, karakter_border):
+    terpanjang = 0
+    for e in daftar_email_valid:
+        if len(e) > terpanjang:
+            terpanjang = len(e)
+
+    garis = "+" + karakter_border * (terpanjang + 2) + "+"
+    hasil = garis + "\n"
+    for e in daftar_email_valid:
+        spasi = " " * (terpanjang - len(e))
+        hasil = hasil + "| " + e + spasi + " |\n"
+    hasil = hasil + garis
+    return hasil
+
+
+print("--- Sistem Pencatatan email valid ---")
+border = input("Masukkan border dengan karakter bebas: ")
+print()
+print("Ketik 'tutup' untuk mengakhiri masukan dan mencetak email.")
+
+valid = []
+
+while True:
+    email = input("Masukkan email: ")
+    if email == "tutup":
+        break
+
+    masalah = deteksi_anomali_email(email)
+
+    if len(masalah) == 0:
+        duplikat = False
+        for e in valid:
+            if e == email:
+                duplikat = True
+        if duplikat:
+            masalah = ["Email sudah terdaftar (Duplikat)."]
+
+    if len(masalah) == 0:
+        print(">> Email VALID!")
+        valid = valid + [email]
+    else:
+        print(">> Email DITOLAK karena:")
+        for m in masalah:
+            print("   -", m)
+
+print()
+print("--- HASIL EMAIL VALID ---")
+print(cetak_daftar(valid, border))
