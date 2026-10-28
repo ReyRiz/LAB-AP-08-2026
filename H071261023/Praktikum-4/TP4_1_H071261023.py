@@ -1,31 +1,26 @@
-print("Selamat datang di Kasir Minimarket!")
-
-def hitung_subtotal(harga, jumlah, adalah_member=False):
+def kasir(harga, jumlah, member=False):
     subtotal = harga * jumlah
-    if adalah_member:
-        subtotal = subtotal * 9 // 10
-    return subtotal
+    if member:
+        subtotal = subtotal * 0.90
+    return int(subtotal)
 
-while True:
-    status = input("Apakah Anda member? (y/n): ")
-    if status == "y" or status == "n":
-        break
-    print("Input tidak valid, ketik y atau n.")
-member = status == "y"
+print("\nSelamat datang di minimarket")
+
+status_member = input("Apakah Anda member? (y/n): ")
+member = status_member == "y"
 
 total = 0
-while True:
-    nama_barang = input("Masukkan nama barang (kosongkan untuk selesai): ")
-    if nama_barang == "":
-        break
-    try:
-        int(nama_barang)
-        print("Nama barang tidak boleh berupa angka.")
-    except ValueError:
-        harga = int(input("Harga barang: ").replace(".", ""))
-        jumlah = int(input("Jumlah barang: ").replace(".", ""))
-        subtotal = hitung_subtotal(harga, jumlah, adalah_member=member)
-        print(f"Subtotal {nama_barang}: Rp{subtotal:,}".replace(",", "."))
-        total += subtotal
 
-print(f"Total belanja: Rp{total:,}".replace(",", "."))
+while True:
+    nama_barang = input("Masukkan nama barang: ")
+    if nama_barang == "":
+        print("Sesi selesai, terima kasih")
+        break
+    harga_barang = int(input("Harga barang: "))
+    jumlah = int(input("Jumlah barang: "))
+
+    subtotal = kasir(harga_barang, jumlah, member)
+    print(f"Subtotal {nama_barang}: Rp{subtotal}")
+
+    total += subtotal
+    print(f"Total belanja: Rp{total}")
