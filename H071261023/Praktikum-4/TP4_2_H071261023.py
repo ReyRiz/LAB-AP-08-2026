@@ -1,25 +1,26 @@
-def rekap_nilai_ujian(*nilai):
-    total = 0
-    banyak = 0
-    for n in nilai:
-        total = total + n
-        banyak = banyak + 1
-    rata = total / banyak
-    return rata, max(nilai), min(nilai)
+def hitung_nilai(*args):
+    rata_rata = sum(args) / len(args)
+    nilai_tertinggi = max(args)
+    nilai_terendah = min(args)
 
-daftar = []
+    return rata_rata, nilai_tertinggi, nilai_terendah
+
+daftar_nilai = []
+
 while True:
-    masukan = input("Masukkan nilai ujian siswa (kosongkan untuk selesai): ")
-    if masukan == "":
-        if daftar == []:
-            print("Data nilai tidak tersedia.")
-        else:
-            rata, tertinggi, terendah = rekap_nilai_ujian(*daftar)
-            print(f"Rata-rata kelas: {rata}")
-            print(f"Nilai tertinggi: {tertinggi}")
-            print(f"Nilai terendah: {terendah}")
+    nilai = input("Masukkan nilai ujian siswa: ")
+    if nilai == "":
         break
-    try:
-        daftar = daftar + [int(masukan)]
-    except ValueError:
-        daftar = daftar + [float(masukan)]
+
+    daftar_nilai.append(float(nilai))
+
+if (nilai) == 0:
+    print("Data nilai tidak tersedia")
+else:
+    rata_rata, tertinggi, terendah = hitung_nilai(*daftar_nilai)
+    if rata_rata.is_integer():
+        rata_rata = int(rata_rata)
+
+    print(f"Rata-rata kelas: {rata_rata}")
+    print(f"Nilai tertinggi: {int(tertinggi)}")
+    print(f"Nilai terendah: {int(terendah)}")
