@@ -1,0 +1,45 @@
+import re
+ 
+ 
+def validasi_nim(nim):
+    return re.match(r"^H071[0-9]{6}$", nim) is not None
+ 
+ 
+def validasi_email(email):
+    return re.match(r"^[A-Za-z0-9._-]+@[A-Za-z0-9-]+(\.[A-Za-z]{2,})+$", email) is not None
+ 
+ 
+def validasi_telepon(telepon):
+    return re.match(r"^[0-9]{10,13}$", telepon) is not None
+ 
+ 
+print("=== Validasi Data Mahasiswa ===\n")
+nim = input("Masukkan NIM      : ")
+email = input("Masukkan Email    : ")
+telepon = input("Masukkan No. Telp : ")
+ 
+nim_ok = validasi_nim(nim)
+email_ok = validasi_email(email)
+telepon_ok = validasi_telepon(telepon)
+ 
+print("\n--- Hasil Validasi ---")
+ 
+if nim_ok:
+    print("NIM         : Valid")
+else:
+    print("NIM         : Format NIM tidak valid!")
+ 
+if email_ok:
+    print("Email       : Valid")
+else:
+    print("Email       : Format email tidak valid!")
+ 
+if telepon_ok:
+    print("No. Telepon : Valid")
+else:
+    print("No. Telepon : Nomor telepon tidak valid!")
+ 
+if nim_ok and email_ok and telepon_ok:
+    print()
+    print("Data mahasiswa berhasil diverifikasi!")
+ 
