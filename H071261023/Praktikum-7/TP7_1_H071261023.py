@@ -31,10 +31,10 @@ def transaksi_baru(nama_kasir):
         if len(data[i]) == 1:
             data[i] = "0" + data[i]
 
-    tanggal_id = tahun + bulan + hari + jam + menit
+    tanggal = tahun + bulan + hari + jam + menit
     angka_acak = str(random.randint(100, 999))
     
-    id_transaksi = inisial + tanggal_id + angka_acak
+    transaksi = inisial + tanggal + angka_acak
 
     daftar_produk = []
     total = 0
@@ -91,7 +91,7 @@ def transaksi_baru(nama_kasir):
     invoice += "=" * 70 + "\n"
     invoice += " " * 23 + "TERIMA KASIH TELAH BERBELANJA\n"
 
-    nama_file = "invoices/" + id_transaksi + ".txt"
+    nama_file = "invoices/" + transaksi + ".txt"
     file = open(nama_file, "w")
     file.write(invoice)
     file.close()
@@ -119,7 +119,7 @@ def transaksi_baru(nama_kasir):
     )
     file = open(nama_history, "a")
     baris = "| " + waktu_history + " | "
-    baris = baris + id_transaksi + " | Rp. " + str(total) + "\n"
+    baris = baris + transaksi + " | Rp. " + str(total) + "\n"
     file.write(baris)
     file.write("=" * 70 + "\n")
     file.close()
