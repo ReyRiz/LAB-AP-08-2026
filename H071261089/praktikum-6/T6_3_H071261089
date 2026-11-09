@@ -1,0 +1,159 @@
+def rata_kiri(teks, lebar):
+    return teks + " " * (lebar - len(teks))
+
+
+def format_durasi(detik):
+    menit = detik // 60
+    sisa = detik % 60
+    if sisa < 10:
+        return str(menit) + ":0" + str(sisa)
+    return str(menit) + ":" + str(sisa)
+
+
+def tambah_lagu(playlist, genre_set, judul, artis, genre, durasi):
+    lagu = (judul, artis, genre, durasi)
+    playlist.append(lagu)
+    genre_set.add(genre)
+    return f"Lagu '{judul}' oleh {artis} berhasil ditambahkan!"
+
+
+def tampilkan_playlist(playlist):
+    if len(playlist) == 0:
+        print("Playlist masih kosong.")
+        return
+    garis = "=" * 62
+    print(garis)
+    print(rata_kiri("No", 4) + rata_kiri("Judul", 24) + rata_kiri("Artis", 18) + rata_kiri("Genre", 10) + "Durasi")
+    print(garis)
+    nomor = 1
+    total = 0
+    for lagu in playlist:
+        judul, artis, genre, durasi = lagu
+        print(rata_kiri(str(nomor), 4) + rata_kiri(judul, 24) + rata_kiri(artis, 18) + rata_kiri(genre, 10) + format_durasi(durasi))
+        total += durasi
+        nomor += 1
+    print(garis)
+    print(f"Total durasi playlist: {total // 60} menit {total % 60} detik")
+
+
+def filter_genre(playlist, genre_target):
+    return [lagu for lagu in playlist if lagu[2].lower() == genre_target.lower()]
+
+
+def hapus_lagu(playlist, nomor):
+    if nomor < 1 or nomor > len(playlist):
+        return None
+    return playlist.pop(nomor - 1)
+
+
+def statistik_playlist(playlist, genre_set):
+    if len(playlist) == 0:
+        print("Playlist masih kosong.")
+        return
+
+    distribusi = {}
+    for lagu in playlist:
+        genre = lagu[2]
+        if genre in distribusi:
+            distribusi[genre] += 1
+        else:
+            distribusi[genre] = 1
+
+    terpanjang = playlist[0]
+    terpendek = playlist[0]
+    for lagu in playlist:
+        if lagu[3] > terpanjang[3]:
+            terpanjang = lagu
+        if lagu[3] < terpendek[3]:
+            terpendek = lagu
+
+    print("=" * 40)
+    print(" STATISTIK PLAYLIST PLAYTUNE")
+    print("=" * 40)
+    print(f" Total lagu : {len(playlist)}")
+    print(f" Jumlah genre : {len(genre_set)}")
+    print(f" Daftar genre : {genre_set}")
+    print(" Distribusi genre:")
+    for genre in distribusi:
+        print(f" {genre} : {'#' * distribusi[genre]} ({distribusi[genre]})")
+    print(f" Lagu terpanjang : {terpanjang[0]} ({format_durasi(terpanjang[3])})")
+    print(f" Lagu terpendek : {terpendek[0]} ({format_durasi(terpendek[3])})")
+    print("=" * 40)
+
+
+playlist = []
+genre_set = set()
+
+print("=" * 40)
+print(" PLAYLIST MUSIK - PLAYTUNE")
+print("=" * 40)
+
+while True:
+    print("Menu:")
+    print("1. Tambah Lagu")
+    print("2. Tampilkan Playlist")
+    print("3. Filter berdasarkan Genre")
+    print("4. Hapus Lagu")
+    print("5. Statistik Playlist")
+    print("6. Keluar")
+    pilihan = input("Pilih menu (1-6): ")
+
+    if pilihan == "1":
+        judul = input("Judul lagu: ")
+        artis = input("Artis: ")
+        genre = input("Genre (Pop/Rock/Jazz/RnB/Dangdut): ")
+        try:
+            durasi = int(input("Durasi (dalam detik): "))
+        except ValueError:
+            print("Durasi harus berupa angka!")
+            continue
+        if durasi <= 0:
+            print("Durasi harus lebih dari 0!")
+            continue
+        print(tambah_lagu(playlist, genre_set, judul, artis, genre, durasi))
+
+    elif pilihan == "2":
+        tampilkan_playlist(playlist)
+
+    elif pilihan == "3":
+        if len(playlist) == 0:
+            print("Playlist masih kosong.")
+        else:
+            print("Genre tersedia:", genre_set)
+            target = input("Masukkan genre yang ingin difilter: ")
+            hasil = filter_genre(playlist, target)
+            if len(hasil) == 0:
+                print(f"Tidak ada lagu bergenre '{target}'.")
+            else:
+                print(f"Lagu bergenre '{target}':")
+                nomor = 1
+                for lagu in hasil:
+                    print(f" {nomor}. {lagu[0]} - {lagu[1]} ({format_durasi(lagu[3])})")
+                    nomor += 1
+
+    elif pilihan == "4":
+        tampilkan_playlist(playlist)
+        if len(playlist) > 0:
+            try:
+                nomor = int(input("Nomor lagu yang ingin dihapus: "))
+            except ValueError:
+                print("Nomor harus berupa angka!")
+                continue
+            dihapus = hapus_lagu(playlist, nomor)
+            if dihapus is None:
+                print("Nomor lagu tidak valid!")
+            else:
+                print(f"Lagu '{dihapus[0]}' berhasil dihapus!")
+                genre_set = set()
+                for lagu in playlist:
+                    genre_set.add(lagu[2])
+
+    elif pilihan == "5":
+        statistik_playlist(playlist, genre_set)
+
+    elif pilihan == "6":
+        print("Terima kasih telah menggunakan PlayTune!")
+        break
+
+    else:
+        print("Pilihan tidak valid!")
